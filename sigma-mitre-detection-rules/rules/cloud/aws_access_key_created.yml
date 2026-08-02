@@ -1,0 +1,22 @@
+title: AWS IAM Access Key Created
+id: 489d32aa-45b1-43d5-8d33-84c74bf3d15e
+status: experimental
+description: Detects creation of a new IAM access key, which may establish persistent programmatic access.
+references:
+- https://attack.mitre.org/techniques/T1098/001/
+author: Mary Amoah
+date: '2026-08-02'
+tags:
+- attack.persistence
+- attack.t1098.001
+logsource:
+  product: aws
+  service: cloudtrail
+detection:
+  selection:
+    eventSource: iam.amazonaws.com
+    eventName: CreateAccessKey
+  condition: selection
+falsepositives:
+- Approved onboarding, key rotation, automation provisioning, or break-glass procedures.
+level: medium

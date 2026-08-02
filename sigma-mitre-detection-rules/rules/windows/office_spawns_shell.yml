@@ -1,0 +1,33 @@
+title: Office Application Spawns Command Shell
+id: 7f7d868d-529f-4f34-9b3c-f6a5964cbf83
+status: experimental
+description: Detects Microsoft Office applications spawning command interpreters or script engines.
+references:
+- https://attack.mitre.org/techniques/T1204/002/
+author: Mary Amoah
+date: '2026-08-02'
+tags:
+- attack.execution
+- attack.t1204.002
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection_parent:
+    ParentImage|endswith:
+    - \winword.exe
+    - \excel.exe
+    - \powerpnt.exe
+    - \outlook.exe
+  selection_child:
+    Image|endswith:
+    - \cmd.exe
+    - \powershell.exe
+    - \pwsh.exe
+    - \wscript.exe
+    - \cscript.exe
+    - \mshta.exe
+  condition: selection_parent and selection_child
+falsepositives:
+- Legitimate macros, add-ins, or enterprise automation launched from Office.
+level: high

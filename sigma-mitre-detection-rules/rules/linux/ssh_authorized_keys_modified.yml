@@ -1,0 +1,23 @@
+title: SSH Authorized Keys File Modified
+id: 93d8f52b-4672-4f1f-9efb-69a843225eeb
+status: experimental
+description: Detects writes to SSH authorized_keys files that may establish persistent access.
+references:
+- https://attack.mitre.org/techniques/T1098/004/
+author: Mary Amoah
+date: '2026-08-02'
+tags:
+- attack.persistence
+- attack.t1098.004
+logsource:
+  product: linux
+  category: file_event
+detection:
+  selection:
+    TargetFilename|endswith:
+    - /.ssh/authorized_keys
+    - /.ssh/authorized_keys2
+  condition: selection
+falsepositives:
+- Legitimate key rotation, provisioning, or configuration-management activity.
+level: medium

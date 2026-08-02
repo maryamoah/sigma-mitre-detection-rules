@@ -1,0 +1,30 @@
+title: Linux Account Discovery
+id: b3e7b889-6d49-4130-9e9d-fcd9c697b4aa
+status: experimental
+description: Detects commands commonly used to enumerate local users and groups.
+references:
+- https://attack.mitre.org/techniques/T1087/001/
+author: Mary Amoah
+date: '2026-08-02'
+tags:
+- attack.discovery
+- attack.t1087.001
+logsource:
+  product: linux
+  category: process_creation
+detection:
+  selection:
+    Image|endswith:
+    - /id
+    - /getent
+    - /cat
+    CommandLine|contains:
+    - passwd
+    - group
+    - ' id'
+    - getent passwd
+    - getent group
+  condition: selection
+falsepositives:
+- Routine administration, configuration management, and inventory scripts.
+level: low

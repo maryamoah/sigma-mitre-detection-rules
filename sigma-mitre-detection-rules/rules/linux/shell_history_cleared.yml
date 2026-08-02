@@ -1,0 +1,26 @@
+title: Linux Shell History Cleared
+id: 0a677d41-32c0-4b55-9aa1-82a48c7a059b
+status: experimental
+description: Detects commands that remove or truncate common shell history files.
+references:
+- https://attack.mitre.org/techniques/T1070/003/
+author: Mary Amoah
+date: '2026-08-02'
+tags:
+- attack.defense_evasion
+- attack.t1070.003
+logsource:
+  product: linux
+  category: process_creation
+detection:
+  selection_cmd:
+    CommandLine|contains:
+    - history -c
+    - history -w /dev/null
+    - '> ~/.bash_history'
+    - rm ~/.bash_history
+    - truncate -s 0 ~/.bash_history
+  condition: selection_cmd
+falsepositives:
+- Privacy-focused user cleanup or approved golden-image preparation.
+level: high

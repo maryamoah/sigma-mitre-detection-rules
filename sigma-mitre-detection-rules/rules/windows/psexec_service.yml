@@ -1,0 +1,28 @@
+title: PsExec-Like Remote Service Creation
+id: 33e60389-6dbf-4ee6-960c-c88e39248956
+status: experimental
+description: Detects service names and image paths commonly associated with PsExec-style remote execution.
+references:
+- https://attack.mitre.org/techniques/T1021/002/
+author: Mary Amoah
+date: '2026-08-02'
+tags:
+- attack.lateral_movement
+- attack.t1021.002
+logsource:
+  product: windows
+  service: system
+detection:
+  selection_event:
+    EventID: 7045
+  selection_indicator:
+    ServiceName|contains:
+    - PSEXESVC
+    - PAExec
+    ImagePath|contains:
+    - PSEXESVC
+    - PAExec
+  condition: selection_event and 1 of selection_indicator
+falsepositives:
+- Authorized administration or software deployment using PsExec or compatible tools.
+level: high
