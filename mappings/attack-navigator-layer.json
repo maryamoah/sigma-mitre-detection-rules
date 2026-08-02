@@ -1,0 +1,437 @@
+{
+  "name": "Sigma MITRE Detection Rules",
+  "versions": {
+    "attack": "17",
+    "navigator": "5.1.0",
+    "layer": "4.5"
+  },
+  "domain": "enterprise-attack",
+  "description": "Detection coverage generated from the Sigma ruleset. Scores reflect the number of rules mapped to each technique.",
+  "filters": {
+    "platforms": [
+      "Windows",
+      "Linux",
+      "macOS",
+      "IaaS",
+      "SaaS",
+      "Office Suite"
+    ]
+  },
+  "sorting": 3,
+  "layout": {
+    "layout": "side",
+    "showID": true,
+    "showName": true
+  },
+  "hideDisabled": false,
+  "techniques": [
+    {
+      "techniqueID": "T1003.001",
+      "score": 1,
+      "enabled": true,
+      "comment": "LSASS Memory Dump via comsvcs.dll MiniDump Export",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1003.002",
+      "score": 1,
+      "enabled": true,
+      "comment": "Registry Hive Export of SAM SYSTEM or SECURITY",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1003.003",
+      "score": 1,
+      "enabled": true,
+      "comment": "NTDS.dit Extraction via ntdsutil or vssadmin",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1003.006",
+      "score": 1,
+      "enabled": true,
+      "comment": "Suspicious Directory Replication Command Line Arguments",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1016",
+      "score": 1,
+      "enabled": true,
+      "comment": "Host and Network Reconnaissance Command Sequence",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1021.002",
+      "score": 1,
+      "enabled": true,
+      "comment": "Remote Service Execution via PsExec or Equivalent",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1021.006",
+      "score": 1,
+      "enabled": true,
+      "comment": "Remote Execution via WinRM and PowerShell Remoting",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1027",
+      "score": 1,
+      "enabled": true,
+      "comment": "PowerShell Encoded Command Execution",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1047",
+      "score": 1,
+      "enabled": true,
+      "comment": "Process Creation via WMIC Process Call Create",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1053.005",
+      "score": 1,
+      "enabled": true,
+      "comment": "Scheduled Task Creation With Suspicious Action or SYSTEM Context",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1059.001",
+      "score": 1,
+      "enabled": true,
+      "comment": "PowerShell Encoded Command Execution",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1070.001",
+      "score": 1,
+      "enabled": true,
+      "comment": "Windows Event Log Cleared via wevtutil or PowerShell",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1082",
+      "score": 1,
+      "enabled": true,
+      "comment": "Host and Network Reconnaissance Command Sequence",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1087.002",
+      "score": 1,
+      "enabled": true,
+      "comment": "Local and Domain Account Enumeration via net.exe",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1105",
+      "score": 2,
+      "enabled": true,
+      "comment": "Remote File Transfer via BITSAdmin; File Download via Certutil",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1134",
+      "score": 1,
+      "enabled": true,
+      "comment": "Process Execution Under Alternate Credentials via runas",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1140",
+      "score": 1,
+      "enabled": true,
+      "comment": "File Download via Certutil",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1197",
+      "score": 1,
+      "enabled": true,
+      "comment": "Remote File Transfer via BITSAdmin",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1204.002",
+      "score": 1,
+      "enabled": true,
+      "comment": "Office Application Spawning Command or Script Interpreter",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1218.005",
+      "score": 1,
+      "enabled": true,
+      "comment": "Mshta Executing Remote or Inline Script Payload",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1218.010",
+      "score": 1,
+      "enabled": true,
+      "comment": "Regsvr32 Scriptlet Execution via scrobj.dll",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1482",
+      "score": 1,
+      "enabled": true,
+      "comment": "Active Directory Domain and Trust Discovery",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1486",
+      "score": 1,
+      "enabled": true,
+      "comment": "Mass File Operation Consistent With Ransomware Staging",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1489",
+      "score": 1,
+      "enabled": true,
+      "comment": "Mass File Operation Consistent With Ransomware Staging",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1490",
+      "score": 1,
+      "enabled": true,
+      "comment": "Volume Shadow Copy Deletion or Recovery Disabling",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1543.003",
+      "score": 1,
+      "enabled": true,
+      "comment": "Windows Service Creation From Suspicious Binary Path",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1546.003",
+      "score": 1,
+      "enabled": true,
+      "comment": "WMI Event Subscription Persistence via Consumer Binding",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1547.001",
+      "score": 1,
+      "enabled": true,
+      "comment": "Autorun Registry Key Modification Pointing to Suspicious Path",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1548.002",
+      "score": 1,
+      "enabled": true,
+      "comment": "UAC Bypass via Fodhelper Registry Hijack",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1555.004",
+      "score": 1,
+      "enabled": true,
+      "comment": "Windows Credential Manager Enumeration via VaultCmd",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1562.001",
+      "score": 1,
+      "enabled": true,
+      "comment": "Microsoft Defender Protection Disabled via Command Line",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1562.004",
+      "score": 1,
+      "enabled": true,
+      "comment": "Windows Firewall Disabled or Rules Purged via netsh",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1566.001",
+      "score": 1,
+      "enabled": true,
+      "comment": "Office Application Spawning Command or Script Interpreter",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    }
+  ],
+  "gradient": {
+    "colors": [
+      "#e8f5e9",
+      "#2e7d32"
+    ],
+    "minValue": 0,
+    "maxValue": 2
+  },
+  "legendItems": [],
+  "showTacticRowBackground": true,
+  "tacticRowBackground": "#dddddd",
+  "selectTechniquesAcrossTactics": true
+}

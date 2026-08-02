@@ -1,0 +1,49 @@
+---
+title: Mass File Operation Consistent With Ransomware Staging
+id: 864a1418-7445-4c21-9584-185d521f6c6c
+status: experimental
+description: |
+    Detects command lines that disable recovery, stop backup and database
+    services, or empty the recycle bin at scale. These actions immediately
+    precede encryption in most ransomware playbooks. This rule targets the
+    preparation phase because detection during encryption is usually too late
+    to matter.
+references:
+    - https://attack.mitre.org/techniques/T1486/
+    - https://attack.mitre.org/techniques/T1489/
+author: Mary Amoah
+date: 2026-08-02
+tags:
+    - attack.impact
+    - attack.t1486
+    - attack.t1489
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection_stop_services:
+        CommandLine|contains|all:
+            - 'net stop'
+        CommandLine|contains:
+            - 'sql'
+            - 'veeam'
+            - 'backup'
+            - 'exchange'
+            - 'msexchange'
+    selection_taskkill_db:
+        Image|endswith: '\taskkill.exe'
+        CommandLine|contains:
+            - 'sqlservr'
+            - 'sqlwriter'
+            - 'oracle'
+            - 'veeam'
+    selection_recycle:
+        CommandLine|contains|all:
+            - 'vssadmin'
+            - 'resize shadowstorage'
+    condition: 1 of selection_*
+falsepositives:
+    - Scheduled maintenance windows where database or backup services are
+      stopped deliberately. Correlate with the change calendar.
+    - Backup software reconfiguring shadow storage limits during setup.
+level: critical

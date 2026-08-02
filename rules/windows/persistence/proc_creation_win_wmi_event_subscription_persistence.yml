@@ -1,0 +1,40 @@
+---
+title: WMI Event Subscription Persistence via Consumer Binding
+id: ecf5ba88-b791-4ea7-a92b-1d77c0f491c7
+status: experimental
+description: |
+    Detects command lines creating WMI event filters, consumers or bindings.
+    A filter-to-consumer binding executes a payload when a system event
+    occurs, providing fileless persistence that survives reboot and is
+    invisible to autorun inspection tools that only cover registry and
+    startup folders.
+references:
+    - https://attack.mitre.org/techniques/T1546/003/
+    - https://learn.microsoft.com/en-us/windows/win32/wmisdk/receiving-a-wmi-event
+author: Mary Amoah
+date: 2026-08-02
+tags:
+    - attack.persistence
+    - attack.t1546.003
+    - attack.privilege_escalation
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection_consumer:
+        CommandLine|contains:
+            - 'CommandLineEventConsumer'
+            - 'ActiveScriptEventConsumer'
+            - '__EventFilter'
+            - '__FilterToConsumerBinding'
+    selection_wmi_ns:
+        CommandLine|contains|all:
+            - 'wmic'
+            - '/namespace:'
+            - 'subscription'
+    condition: 1 of selection_*
+falsepositives:
+    - Monitoring and asset management platforms that legitimately register WMI
+      subscriptions. These are typically installed once and rarely change.
+    - Endpoint management tooling performing inventory collection.
+level: high

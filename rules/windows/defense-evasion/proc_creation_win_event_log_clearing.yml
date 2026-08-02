@@ -1,0 +1,43 @@
+---
+title: Windows Event Log Cleared via wevtutil or PowerShell
+id: a83449eb-d5ca-4a1d-9e92-2fc8c935308f
+status: experimental
+description: |
+    Detects clearing of Windows event logs through wevtutil, PowerShell or
+    WMI. Log clearing is a deliberate anti-forensic act with almost no
+    legitimate operational purpose on a production endpoint, and it usually
+    marks the end of an intrusion rather than the beginning.
+references:
+    - https://attack.mitre.org/techniques/T1070/001/
+    - https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/wevtutil
+author: Mary Amoah
+date: 2026-08-02
+tags:
+    - attack.defense_evasion
+    - attack.t1070.001
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection_wevtutil:
+        Image|endswith: '\wevtutil.exe'
+        CommandLine|contains:
+            - ' cl '
+            - 'clear-log'
+    selection_powershell:
+        CommandLine|contains:
+            - 'Clear-EventLog'
+            - 'Remove-EventLog'
+            - '.ClearEventLog('
+    selection_wmic:
+        CommandLine|contains|all:
+            - 'wmic'
+            - 'nteventlog'
+            - 'cleareventlog'
+    condition: 1 of selection_*
+falsepositives:
+    - Golden image preparation and sysprep, where logs are deliberately
+      cleared before capture. Correlate with imaging activity.
+    - Documented log rotation on systems with constrained storage. This should
+      be scheduled and traceable to a known parent process.
+level: high

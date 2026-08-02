@@ -1,0 +1,41 @@
+---
+title: Autorun Registry Key Modification Pointing to Suspicious Path
+id: b729861a-7f4c-452f-a99b-344baca34a6a
+status: experimental
+description: |
+    Detects writes to Run or RunOnce autorun keys where the value points to a
+    user-writable or temporary directory. Legitimate software persists from
+    Program Files; malware commonly persists from AppData, ProgramData or
+    Temp. Filtering on the target path rather than the key itself keeps this
+    rule usable in environments with heavy software churn.
+references:
+    - https://attack.mitre.org/techniques/T1547/001/
+    - https://learn.microsoft.com/en-us/windows/win32/setupapi/run-and-runonce-registry-keys
+author: Mary Amoah
+date: 2026-08-02
+tags:
+    - attack.persistence
+    - attack.t1547.001
+logsource:
+    product: windows
+    category: registry_set
+    definition: Requires Sysmon Event ID 13 or equivalent registry auditing.
+detection:
+    selection_key:
+        TargetObject|contains:
+            - '\Software\Microsoft\Windows\CurrentVersion\Run\'
+            - '\Software\Microsoft\Windows\CurrentVersion\RunOnce\'
+            - '\Software\Microsoft\Windows\CurrentVersion\RunServices\'
+    selection_path:
+        Details|contains:
+            - '\AppData\Local\Temp\'
+            - '\AppData\Roaming\'
+            - '\ProgramData\'
+            - '\Users\Public\'
+            - '\Windows\Temp\'
+    condition: all of selection_*
+falsepositives:
+    - Per-user application installers that stage updaters in AppData, notably
+      chat, browser and cloud sync clients.
+    - Software updaters that write a one-shot RunOnce entry during patching.
+level: high

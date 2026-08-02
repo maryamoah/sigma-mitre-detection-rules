@@ -1,0 +1,45 @@
+---
+title: Host and Network Reconnaissance Command Sequence
+id: 4bfc442a-e1b5-4493-8a07-78d6795d7b78
+status: experimental
+description: |
+    Detects native reconnaissance utilities enumerating system, network and
+    session state. Each command is benign in isolation and common in
+    administrative work. This rule exists to feed hunting and correlation,
+    where several distinct discovery commands from a single non-admin host
+    within a short window is the actual signal.
+references:
+    - https://attack.mitre.org/techniques/T1016/
+    - https://attack.mitre.org/techniques/T1082/
+author: Mary Amoah
+date: 2026-08-02
+tags:
+    - attack.discovery
+    - attack.t1016
+    - attack.t1082
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection_img:
+        Image|endswith:
+            - '\systeminfo.exe'
+            - '\ipconfig.exe'
+            - '\arp.exe'
+            - '\route.exe'
+            - '\nbtstat.exe'
+            - '\whoami.exe'
+    selection_netsession:
+        Image|endswith:
+            - '\net.exe'
+            - '\net1.exe'
+        CommandLine|contains:
+            - ' session'
+            - ' share'
+            - ' view'
+    condition: 1 of selection_*
+falsepositives:
+    - Routine administrative and help desk troubleshooting. This rule will be
+      noisy as a standalone alert and is intended for correlation or hunting.
+    - Login scripts and monitoring agents collecting host inventory.
+level: informational
