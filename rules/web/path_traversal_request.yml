@@ -1,0 +1,26 @@
+title: Web Request Attempts Path Traversal
+id: b168aa59-6924-4cc2-9f9c-a9f337d8008a
+status: experimental
+description: Detects directory traversal sequences in web request paths or query strings.
+references:
+- https://attack.mitre.org/techniques/T1190/
+author: Mary Amoah
+date: '2026-08-02'
+tags:
+- attack.initial_access
+- attack.t1190
+logsource:
+  product: webserver
+  category: web
+detection:
+  selection:
+    url|contains:
+    - ../
+    - ..%2f
+    - '%2e%2e%2f'
+    - ..\
+    - '%252e%252e%252f'
+  condition: selection
+falsepositives:
+- Vulnerability scanners, penetration testing, or applications legitimately passing encoded file paths.
+level: high

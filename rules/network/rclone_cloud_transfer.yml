@@ -1,0 +1,26 @@
+title: Suspicious Rclone Command for Cloud Transfer
+id: 6048677b-a6f5-4700-9741-a8d5f11a31b7
+status: experimental
+description: Detects rclone commands used to copy or synchronize data to remote storage.
+references:
+- https://attack.mitre.org/techniques/T1567/002/
+author: Mary Amoah
+date: '2026-08-02'
+tags:
+- attack.exfiltration
+- attack.t1567.002
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection:
+    Image|endswith: \rclone.exe
+    CommandLine|contains:
+    - ' copy '
+    - ' sync '
+    - ' move '
+    - ' copyto '
+  condition: selection
+falsepositives:
+- Approved backup, migration, or cloud-storage synchronization jobs.
+level: high

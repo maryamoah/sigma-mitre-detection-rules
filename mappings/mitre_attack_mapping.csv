@@ -1,0 +1,27 @@
+Rule Name,Technique ID,Tactic,Severity,Platform,Rule Path
+PowerShell Encoded Command Execution,T1059.001,Execution,high,windows,rules/windows/powershell_encoded_command.yml
+Office Application Spawns Command Shell,T1204.002,Execution,high,windows,rules/windows/office_spawns_shell.yml
+Suspicious Rundll32 JavaScript Execution,T1218.011,Defense Evasion,high,windows,rules/windows/rundll32_javascript.yml
+Registry Run Key Modification,T1547.001,Persistence,medium,windows,rules/windows/registry_run_key.yml
+Windows Security Event Log Cleared,T1070.001,Defense Evasion,high,windows,rules/windows/security_log_cleared.yml
+Suspicious LSASS Process Access,T1003.001,Credential Access,high,windows,rules/windows/lsass_process_access.yml
+NTDS Utility Creates Active Directory Snapshot,T1003.003,Credential Access,high,windows,rules/windows/ntdsutil_snapshot.yml
+New Windows Service Installed,T1543.003,Persistence,medium,windows,rules/windows/new_service_installed.yml
+PsExec-Like Remote Service Creation,T1021.002,Lateral Movement,high,windows,rules/windows/psexec_service.yml
+Remote Desktop Logon from External Address,T1021.001,Lateral Movement,medium,windows,rules/windows/rdp_successful_logon.yml
+Windows Account Discovery Commands,T1087.002,Discovery,medium,windows,rules/windows/account_discovery.yml
+Shadow Copy Deletion with VSSAdmin,T1490,Impact,critical,windows,rules/windows/vssadmin_delete_shadows.yml
+Linux Shell History Cleared,T1070.003,Defense Evasion,high,linux,rules/linux/shell_history_cleared.yml
+Linux Account Discovery,T1087.001,Discovery,low,linux,rules/linux/account_discovery.yml
+SSH Authorized Keys File Modified,T1098.004,Persistence,medium,linux,rules/linux/ssh_authorized_keys_modified.yml
+Linux Sudoers File Modified,T1548.003,Privilege Escalation,high,linux,rules/linux/sudoers_modified.yml
+Suspicious Curl or Wget Download to Temporary Directory,T1105,Command And Control,medium,linux,rules/linux/download_to_temp.yml
+Web Request Contains SQL Injection Keywords,T1190,Initial Access,high,webserver,rules/web/sql_injection_request.yml
+Web Request Attempts Path Traversal,T1190,Initial Access,high,webserver,rules/web/path_traversal_request.yml
+Potential DNS Tunneling Query,T1071.004,Command And Control,medium,dns,rules/network/dns_tunneling_long_query.yml
+Network Connection to TOR SOCKS Port,T1090.003,Command And Control,medium,windows,rules/network/tor_socks_port.yml
+Suspicious Rclone Command for Cloud Transfer,T1567.002,Exfiltration,high,windows,rules/network/rclone_cloud_transfer.yml
+AWS CloudTrail Logging Disabled,T1562.008,Defense Evasion,high,aws,rules/cloud/aws_cloudtrail_disabled.yml
+AWS IAM Access Key Created,T1098.001,Persistence,medium,aws,rules/cloud/aws_access_key_created.yml
+Microsoft 365 Inbox Forwarding Rule Created,T1114.003,Collection,high,m365,rules/email/m365_external_forwarding_rule.yml
+Suspicious Email Attachment Type,T1566.001,Initial Access,medium,m365,rules/email/suspicious_attachment_type.yml

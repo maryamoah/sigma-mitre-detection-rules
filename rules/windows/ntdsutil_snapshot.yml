@@ -1,0 +1,25 @@
+title: NTDS Utility Creates Active Directory Snapshot
+id: 8cd3351d-bfe1-4771-b10a-c8d95405a44a
+status: experimental
+description: Detects ntdsutil commands that create installation media or snapshots which may expose domain credentials.
+references:
+- https://attack.mitre.org/techniques/T1003/003/
+author: Mary Amoah
+date: '2026-08-02'
+tags:
+- attack.credential_access
+- attack.t1003.003
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection:
+    Image|endswith: \ntdsutil.exe
+    CommandLine|contains:
+    - ifm
+    - create full
+    - snapshot
+  condition: selection
+falsepositives:
+- Authorized domain-controller backup, recovery, or migration operations.
+level: high

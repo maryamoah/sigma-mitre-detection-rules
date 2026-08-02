@@ -1,0 +1,23 @@
+title: Registry Run Key Modification
+id: bf11d023-cea3-49bb-87fc-fc93275526eb
+status: experimental
+description: Detects modification of common Registry Run and RunOnce persistence locations.
+references:
+- https://attack.mitre.org/techniques/T1547/001/
+author: Mary Amoah
+date: '2026-08-02'
+tags:
+- attack.persistence
+- attack.t1547.001
+logsource:
+  product: windows
+  category: registry_set
+detection:
+  selection:
+    TargetObject|contains:
+    - \Software\Microsoft\Windows\CurrentVersion\Run
+    - \Software\Microsoft\Windows\CurrentVersion\RunOnce
+  condition: selection
+falsepositives:
+- Software installers, endpoint management agents, and approved user startup applications.
+level: medium
