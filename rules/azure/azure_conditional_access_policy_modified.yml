@@ -1,0 +1,33 @@
+---
+title: Entra ID Conditional Access Policy Modified or Removed
+id: 1ddd7553-aec5-4b20-b7f8-fc59183f54c3
+status: experimental
+description: |
+    Detects changes to conditional access policies. These policies enforce
+    MFA, device compliance and location restrictions, so weakening or deleting
+    one removes an authentication control for every user in its scope. Policy
+    changes are infrequent and high-impact, making them well suited to review.
+references:
+    - https://attack.mitre.org/techniques/T1556/
+    - https://learn.microsoft.com/en-us/entra/identity/conditional-access/overview
+author: Mary Amoah
+date: 2026-08-02
+tags:
+    - attack.defense_evasion
+    - attack.t1556
+    - attack.persistence
+logsource:
+    product: azure
+    service: auditlogs
+detection:
+    selection:
+        properties.message:
+            - 'Update conditional access policy'
+            - 'Delete conditional access policy'
+            - 'Add conditional access policy'
+    condition: selection
+falsepositives:
+    - Planned identity security work, such as rolling out a new MFA
+      requirement or adjusting named locations.
+    - Report-only policy tuning during a phased deployment.
+level: high

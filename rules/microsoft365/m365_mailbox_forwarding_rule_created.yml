@@ -1,0 +1,47 @@
+---
+title: Microsoft 365 External Mailbox Forwarding Configured
+id: e3fddece-5a41-4a95-a2ea-2dd028203eb1
+status: experimental
+description: |
+    Detects creation of inbox rules or mailbox settings that forward mail to
+    an external address. Auto-forwarding is the standard persistence and
+    collection mechanism in business email compromise, chosen because it
+    survives password resets and continues silently after the attacker loses
+    interactive access.
+references:
+    - https://attack.mitre.org/techniques/T1114/003/
+    - https://learn.microsoft.com/en-us/exchange/policy-and-compliance/mail-flow-rules/mail-flow-rules
+author: Mary Amoah
+date: 2026-08-02
+tags:
+    - attack.collection
+    - attack.t1114.003
+    - attack.exfiltration
+logsource:
+    product: m365
+    service: exchange
+    definition: |
+        Microsoft 365 unified audit log, Exchange workload. Requires mailbox
+        auditing to be enabled, which is default for most licences but can be
+        disabled per mailbox.
+detection:
+    selection:
+        Operation:
+            - 'New-InboxRule'
+            - 'Set-InboxRule'
+            - 'Set-Mailbox'
+            - 'Set-TransportRule'
+            - 'New-TransportRule'
+    selection_forward:
+        Parameters|contains:
+            - 'ForwardTo'
+            - 'ForwardingSmtpAddress'
+            - 'RedirectTo'
+            - 'DeliverToMailboxAndForward'
+    condition: all of selection*
+falsepositives:
+    - Users legitimately forwarding to a personal address, which many
+      organisations permit despite the risk. Compare the destination domain
+      against your accepted domains.
+    - Shared mailbox and delegation workflows configured by IT.
+level: high

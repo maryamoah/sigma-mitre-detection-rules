@@ -1,0 +1,44 @@
+---
+title: Allowed Outbound Session to Uncommon High Port
+id: fb3c6a92-c367-4f51-b043-4c057a5ae59d
+status: experimental
+description: |
+    Detects permitted outbound sessions to high-numbered destination ports
+    commonly used by remote access frameworks and command and control
+    channels. This is a hunting rule rather than an alert: legitimate
+    applications also use high ports, so the value lies in reviewing which
+    internal hosts do this and whether the destination is expected.
+references:
+    - https://attack.mitre.org/techniques/T1571/
+    - https://attack.mitre.org/techniques/T1071/
+author: Mary Amoah
+date: 2026-08-02
+tags:
+    - attack.command_and_control
+    - attack.t1571
+logsource:
+    product: paloalto
+    service: traffic
+    definition: |
+        Palo Alto traffic logs (type TRAFFIC). Deploy with a filter for your
+        internal address space, and expect to tune the port list heavily to
+        your environment before this is usable.
+detection:
+    selection:
+        type: 'TRAFFIC'
+        action: 'allow'
+        dport:
+            - 4444
+            - 4445
+            - 1337
+            - 8443
+            - 8888
+            - 9001
+            - 50050
+    condition: selection
+falsepositives:
+    - Legitimate applications using high ports, including management
+      consoles, backup agents and developer tooling. Port 8443 in particular
+      is a common alternative HTTPS port.
+    - Approved remote support software.
+level: low

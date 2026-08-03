@@ -1,0 +1,45 @@
+---
+title: AWS Security Monitoring Service Disabled
+id: ae77b3d0-d745-484f-ab25-ebdfc3411dce
+status: experimental
+description: |
+    Detects disabling or deletion of GuardDuty detectors, AWS Config recorders
+    and Security Hub. These services provide the detection and compliance
+    baseline for an account, and turning them off is a deliberate act that
+    precedes activity the operator expects to be noticed.
+references:
+    - https://attack.mitre.org/techniques/T1562/008/
+    - https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_suspend-disable.html
+author: Mary Amoah
+date: 2026-08-02
+tags:
+    - attack.defense_evasion
+    - attack.t1562.008
+logsource:
+    product: aws
+    service: cloudtrail
+detection:
+    selection_guardduty:
+        eventSource: 'guardduty.amazonaws.com'
+        eventName:
+            - 'DeleteDetector'
+            - 'UpdateDetector'
+            - 'DeleteMembers'
+            - 'DisassociateMembers'
+    selection_config:
+        eventSource: 'config.amazonaws.com'
+        eventName:
+            - 'StopConfigurationRecorder'
+            - 'DeleteConfigurationRecorder'
+            - 'DeleteDeliveryChannel'
+    selection_securityhub:
+        eventSource: 'securityhub.amazonaws.com'
+        eventName:
+            - 'DisableSecurityHub'
+            - 'DeleteMembers'
+    condition: 1 of selection_*
+falsepositives:
+    - Cost optimisation work in non-production accounts, where these services
+      are sometimes disabled deliberately.
+    - Account decommissioning.
+level: critical

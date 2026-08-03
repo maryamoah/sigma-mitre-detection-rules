@@ -111,13 +111,13 @@
     },
     {
       "techniqueID": "T1027",
-      "score": 1,
+      "score": 2,
       "enabled": true,
-      "comment": "PowerShell Encoded Command Execution",
+      "comment": "Base64 Decoded Payload Piped to Interpreter; PowerShell Encoded Command Execution",
       "metadata": [
         {
           "name": "rules",
-          "value": "1"
+          "value": "2"
         }
       ]
     },
@@ -126,6 +126,18 @@
       "score": 1,
       "enabled": true,
       "comment": "Process Creation via WMIC Process Call Create",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1053.003",
+      "score": 1,
+      "enabled": true,
+      "comment": "Cron Job Created in System Scheduling Directory",
       "metadata": [
         {
           "name": "rules",
@@ -158,6 +170,18 @@
       ]
     },
     {
+      "techniqueID": "T1059.004",
+      "score": 2,
+      "enabled": true,
+      "comment": "Remote Script Downloaded and Piped Directly to Shell; Interactive Reverse Shell via Shell Redirection",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "2"
+        }
+      ]
+    },
+    {
       "techniqueID": "T1070.001",
       "score": 1,
       "enabled": true,
@@ -166,6 +190,30 @@
         {
           "name": "rules",
           "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1070.003",
+      "score": 1,
+      "enabled": true,
+      "comment": "Shell History Cleared or Logging Disabled",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1078.004",
+      "score": 2,
+      "enabled": true,
+      "comment": "AWS Root Account Console Login or API Usage; Entra ID Sign-In With Elevated Risk Detection",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "2"
         }
       ]
     },
@@ -194,14 +242,122 @@
       ]
     },
     {
-      "techniqueID": "T1105",
+      "techniqueID": "T1098",
+      "score": 1,
+      "enabled": true,
+      "comment": "Local Account Created or Granted Sudo Privileges",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1098.001",
       "score": 2,
       "enabled": true,
-      "comment": "Remote File Transfer via BITSAdmin; File Download via Certutil",
+      "comment": "AWS IAM Access Key Created or Login Profile Added; Credential Added to Azure Application or Service Principal",
       "metadata": [
         {
           "name": "rules",
           "value": "2"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1098.002",
+      "score": 1,
+      "enabled": true,
+      "comment": "Microsoft 365 Mailbox Delegation or Full Access Granted",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1098.003",
+      "score": 1,
+      "enabled": true,
+      "comment": "Azure Privileged Directory Role Assigned",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1098.004",
+      "score": 1,
+      "enabled": true,
+      "comment": "SSH Authorized Keys File Modified",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1105",
+      "score": 3,
+      "enabled": true,
+      "comment": "Remote Script Downloaded and Piped Directly to Shell; Remote File Transfer via BITSAdmin; File Download via Certutil",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "3"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1110",
+      "score": 1,
+      "enabled": true,
+      "comment": "FortiGate SSL VPN Authentication Failure Burst",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1114.002",
+      "score": 1,
+      "enabled": true,
+      "comment": "Microsoft 365 eDiscovery Search Created or Exported",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1114.003",
+      "score": 1,
+      "enabled": true,
+      "comment": "Microsoft 365 External Mailbox Forwarding Configured",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1133",
+      "score": 1,
+      "enabled": true,
+      "comment": "Cisco ASA VPN Session Established",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
         }
       ]
     },
@@ -218,10 +374,34 @@
       ]
     },
     {
-      "techniqueID": "T1140",
+      "techniqueID": "T1136.001",
       "score": 1,
       "enabled": true,
-      "comment": "File Download via Certutil",
+      "comment": "Local Account Created or Granted Sudo Privileges",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1140",
+      "score": 2,
+      "enabled": true,
+      "comment": "Base64 Decoded Payload Piped to Interpreter; File Download via Certutil",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1190",
+      "score": 1,
+      "enabled": true,
+      "comment": "Palo Alto Threat Signature Match of High Severity",
       "metadata": [
         {
           "name": "rules",
@@ -326,6 +506,30 @@
       ]
     },
     {
+      "techniqueID": "T1530",
+      "score": 1,
+      "enabled": true,
+      "comment": "AWS S3 Bucket Policy or ACL Opened to Public Access",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1543.002",
+      "score": 1,
+      "enabled": true,
+      "comment": "Systemd Unit File Created in Persistence Path",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
       "techniqueID": "T1543.003",
       "score": 1,
       "enabled": true,
@@ -342,6 +546,18 @@
       "score": 1,
       "enabled": true,
       "comment": "WMI Event Subscription Persistence via Consumer Binding",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1546.004",
+      "score": 1,
+      "enabled": true,
+      "comment": "Shell Startup File Modified for Persistence",
       "metadata": [
         {
           "name": "rules",
@@ -374,10 +590,34 @@
       ]
     },
     {
+      "techniqueID": "T1548.003",
+      "score": 1,
+      "enabled": true,
+      "comment": "Privilege Escalation via GTFOBins Interpreter Under Sudo",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
       "techniqueID": "T1555.004",
       "score": 1,
       "enabled": true,
       "comment": "Windows Credential Manager Enumeration via VaultCmd",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1556",
+      "score": 1,
+      "enabled": true,
+      "comment": "Entra ID Conditional Access Policy Modified or Removed",
       "metadata": [
         {
           "name": "rules",
@@ -399,13 +639,25 @@
     },
     {
       "techniqueID": "T1562.004",
-      "score": 1,
+      "score": 2,
       "enabled": true,
-      "comment": "Windows Firewall Disabled or Rules Purged via netsh",
+      "comment": "FortiGate Administrative Configuration Change; Windows Firewall Disabled or Rules Purged via netsh",
       "metadata": [
         {
           "name": "rules",
-          "value": "1"
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1562.008",
+      "score": 3,
+      "enabled": true,
+      "comment": "AWS CloudTrail Logging Disabled or Trail Deleted; AWS Security Monitoring Service Disabled; Microsoft 365 Audit Logging Disabled",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "3"
         }
       ]
     },
@@ -420,6 +672,30 @@
           "value": "1"
         }
       ]
+    },
+    {
+      "techniqueID": "T1571",
+      "score": 1,
+      "enabled": true,
+      "comment": "Allowed Outbound Session to Uncommon High Port",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "techniqueID": "T1595.001",
+      "score": 1,
+      "enabled": true,
+      "comment": "Cisco ASA Repeated Denied Inbound Connections",
+      "metadata": [
+        {
+          "name": "rules",
+          "value": "1"
+        }
+      ]
     }
   ],
   "gradient": {
@@ -428,7 +704,7 @@
       "#2e7d32"
     ],
     "minValue": 0,
-    "maxValue": 2
+    "maxValue": 3
   },
   "legendItems": [],
   "showTacticRowBackground": true,

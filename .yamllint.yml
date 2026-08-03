@@ -1,0 +1,65 @@
+---
+# yamllint configuration for Sigma rule content and repository YAML.
+#
+# Sigma rules are read by humans during triage far more often than they are
+# edited, so the emphasis here is on consistency rather than strictness for
+# its own sake. Rules that fight the Sigma format are relaxed deliberately
+# and the reason is recorded inline.
+
+extends: default
+
+ignore: |
+  .git/
+  venv/
+  .venv/
+  node_modules/
+
+rules:
+  # Sigma descriptions and references routinely exceed 80 characters.
+  # Wrapping them would hurt readability more than it helps.
+  line-length:
+    max: 160
+    level: warning
+    allow-non-breakable-words: true
+
+  # Sigma rule files are single documents; requiring the marker keeps
+  # rule files and workflow files consistent.
+  document-start:
+    present: true
+
+  document-end:
+    present: false
+
+  indentation:
+    spaces: 4
+    indent-sequences: consistent
+
+  # `logsource`, `detection`, and `tags` blocks read better with a blank
+  # line between them, but enforcing it is unnecessary noise.
+  empty-lines:
+    max: 2
+    max-start: 0
+    max-end: 1
+
+  comments:
+    min-spaces-from-content: 1
+    require-starting-space: true
+
+  comments-indentation: enable
+
+  truthy:
+    # GitHub Actions uses the `on:` key, which YAML 1.1 reads as boolean.
+    allowed-values: ['true', 'false']
+    check-keys: false
+
+  key-duplicates: enable
+
+  trailing-spaces: enable
+
+  new-line-at-end-of-file: enable
+
+  brackets:
+    max-spaces-inside: 0
+
+  braces:
+    max-spaces-inside: 0

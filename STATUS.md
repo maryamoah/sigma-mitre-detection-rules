@@ -10,12 +10,16 @@ Tracked against the specification. Update as tranches land.
 | `scripts/validate_rules.py` | Convention validator, 20+ checks |
 | `scripts/generate_coverage.py` | Coverage MD, Navigator layer, mapping CSV |
 | `mappings/` (3 artefacts) | Generated from rule tags |
-| Windows rules | **28 rules, 33 techniques, 10 of 14 tactics** |
+| Windows rules | 28 rules |
+| Linux rules | 10 rules (execution, persistence) |
+| Firewall rules | 6 rules (FortiGate, Palo Alto, Cisco ASA) |
+| Cloud rules | 13 rules (AWS 5, Azure 4, M365 4) |
 | `.github/` (CI, templates, CODEOWNERS, Dependabot) | Complete |
 | `README.md`, `CONTRIBUTING.md`, `SECURITY.md`, `CHANGELOG.md` | Complete |
 | Lint configuration | yamllint, markdownlint |
 
-All 28 rules pass `validate_rules.py` with 0 errors and 0 warnings.
+**57 rules total, 56 techniques, 13 of 14 tactics.**
+All pass `validate_rules.py` with 0 errors and 0 warnings.
 
 ## Windows coverage delivered
 
@@ -34,10 +38,7 @@ All 28 rules pass `validate_rules.py` with 0 errors and 0 warnings.
 
 | Item | Notes |
 | --- | --- |
-| Linux rules | auditd execution and persistence |
 | Web rules | Apache, Nginx, IIS |
-| Cloud rules | AWS CloudTrail, Azure, Microsoft 365 |
-| Firewall rules | Fortigate, Palo Alto, Cisco |
 | Network rules | DNS, proxy |
 | `docs/` (9 files) | Architecture, testing, rule writing, philosophy, FAQ, etc. |
 | `examples/` (5 files) | Splunk, Sentinel, Elastic, QRadar, Wazuh conversion |

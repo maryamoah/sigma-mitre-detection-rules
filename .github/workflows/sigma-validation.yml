@@ -55,6 +55,42 @@ jobs:
       - name: Sigma specification check
         run: sigma check rules/
 
+      # Audits UUID uniqueness and ATT&CK tag presence across the ruleset.
+      # Exits non-zero when any rule is missing a tactic or technique tag.
+      - name: ATT&CK metadata audit
+        run: python scripts/generate_coverage.py --check
+
+  coverage:
+    name: Coverage artefacts up to date
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements-dev.txt
+
+      - name: Regenerate coverage
+        run: python scripts/generate_coverage.py
+
+      # Coverage is generated, not hand-maintained. If regenerating produces
+      # a diff, the committed artefacts are stale.
+      - name: Fail if coverage artefacts are stale
+        run: |
+          if ! git diff --quiet -- mappings/; then
+            echo "::error::mappings/ is out of date."
+            echo "Run: python scripts/generate_coverage.py"
+            git diff --stat -- mappings/
+            exit 1
+          fi
+          echo "Coverage artefacts are current."
+
   convert:
     name: Backend conversion smoke test
     runs-on: ubuntu-latest

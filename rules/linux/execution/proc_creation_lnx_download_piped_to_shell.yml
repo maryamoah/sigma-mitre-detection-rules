@@ -1,0 +1,42 @@
+---
+title: Remote Script Downloaded and Piped Directly to Shell
+id: 8e3cab84-c86c-431e-b920-806ae7268001
+status: experimental
+description: |
+    Detects curl or wget retrieving a remote resource and piping it straight
+    into a shell interpreter. The payload never touches disk, so file-based
+    scanning is bypassed entirely. This pattern is common in legitimate
+    installer documentation, which is precisely why attackers rely on it.
+references:
+    - https://attack.mitre.org/techniques/T1059/004/
+    - https://attack.mitre.org/techniques/T1105/
+author: Mary Amoah
+date: 2026-08-02
+tags:
+    - attack.execution
+    - attack.t1059.004
+    - attack.command_and_control
+    - attack.t1105
+logsource:
+    product: linux
+    category: process_creation
+detection:
+    selection_download:
+        CommandLine|contains:
+            - 'curl '
+            - 'wget '
+    selection_pipe:
+        CommandLine|contains:
+            - '| bash'
+            - '| sh'
+            - '|bash'
+            - '|sh'
+            - '| python'
+            - '| perl'
+    condition: all of selection_*
+falsepositives:
+    - Legitimate software installation. Many vendors publish install
+      instructions in exactly this form, so expect matches during provisioning
+      and container image builds.
+    - CI/CD pipelines bootstrapping build tooling.
+level: medium

@@ -1,0 +1,39 @@
+---
+title: Entra ID Sign-In With Elevated Risk Detection
+id: d19fd8ee-e840-4fd1-b9cc-13740eb1ddc6
+status: experimental
+description: |
+    Selects sign-in events flagged by Entra ID Protection risk detections,
+    including anonymised IP addresses, unfamiliar sign-in properties and
+    impossible travel. This surfaces Microsoft's own risk scoring into the
+    SIEM so it can be correlated with other telemetry rather than reviewed in
+    a separate console.
+references:
+    - https://attack.mitre.org/techniques/T1078/004/
+    - https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-risks
+author: Mary Amoah
+date: 2026-08-02
+tags:
+    - attack.initial_access
+    - attack.t1078.004
+    - attack.defense_evasion
+logsource:
+    product: azure
+    service: signinlogs
+    definition: |
+        Requires an Entra ID P2 licence for full risk detection data. Without
+        it, riskLevelDuringSignIn is not populated and this rule cannot fire.
+detection:
+    selection:
+        riskLevelDuringSignIn:
+            - 'high'
+            - 'medium'
+    filter_main_failed:
+        resultType: '50126'
+    condition: selection and not filter_main_failed
+falsepositives:
+    - Staff using commercial VPN services, which reliably triggers anonymised
+      IP detections and is the dominant source of noise in this rule.
+    - Travelling users producing unfamiliar location signals.
+    - Corporate VPN egress points not registered as named locations.
+level: medium
