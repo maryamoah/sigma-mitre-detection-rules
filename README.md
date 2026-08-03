@@ -348,7 +348,7 @@ generated into [`mappings/attack-coverage.md`](mappings/attack-coverage.md).
 
 [Sigma][sigma] is an open, YAML-based signature format for log events —
 generic in the way Snort is for network traffic and YARA is for files. A rule
-describes *what to look for* in a backend-neutral way; a converter turns that
+describes _what to look for_ in a backend-neutral way; a converter turns that
 into a query for a specific SIEM.
 
 The practical consequence for detection engineering: logic is portable, and it
