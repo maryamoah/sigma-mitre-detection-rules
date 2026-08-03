@@ -43,17 +43,22 @@ jobs:
           globs: '**/*.md'
 
   links:
-    name: Link check
+    name: Internal link check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check documentation links
+      # Only relative links are checked on push and pull request. Broken
+      # internal links are always a repository defect and are worth blocking
+      # a merge. External links are checked on a schedule instead -- the rule
+      # references point at attack.mitre.org and vendor documentation, which
+      # rate-limit aggressively enough to make them an unreliable merge gate.
+      - name: Check relative links
         uses: lycheeverse/lychee-action@v2
         with:
           args: >-
+            --offline
             --no-progress
-            --accept 200,204,206,429
             --exclude-path ./.git
             './**/*.md'
           fail: true

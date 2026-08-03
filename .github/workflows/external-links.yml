@@ -1,0 +1,44 @@
+---
+name: External Links
+
+# Rule references point at MITRE, LOLBAS and vendor documentation. Those
+# hosts rate-limit and occasionally return 403 to automated clients, so this
+# runs weekly rather than on every push. A failure here means a reference has
+# rotted and needs updating -- it does not mean the ruleset is broken.
+on:
+  schedule:
+    - cron: '0 7 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    name: Check external references
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check links
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --max-concurrency 4
+            --accept 200,204,206,429
+            --exclude-path ./.git
+            './**/*.md'
+            './rules/**/*.yml'
+          fail: false
+          output: ./lychee-report.md
+
+      - name: Raise an issue for dead references
+        if: steps.lychee.outputs.exit_code != 0
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: Dead reference links detected
+          content-filepath: ./lychee-report.md
+          labels: documentation, maintenance

@@ -20,6 +20,15 @@ MD033: false
 # MD034 bare URLs — allowed inside reference lists in rule documentation.
 MD034: false
 
+# MD036 emphasis instead of heading -- bold sub-labels are used to group
+# related items inside a section without inflating the table of contents
+# with h4 and h5 entries.
+MD036: false
+
+# MD040 fenced code language -- pull request and issue templates contain
+# intentionally empty fences for contributors to paste output into.
+MD040: false
+
 # MD041 first line heading — the README opens with a centred HTML banner
 # block rather than a Markdown H1.
 MD041: false

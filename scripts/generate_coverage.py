@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
 from collections import Counter, defaultdict
@@ -203,8 +204,12 @@ def audit(rules: list[Rule]) -> list[str]:
     return problems
 
 
-def markdown_report(rules: list[Rule]) -> str:
-    """Build the Markdown coverage report."""
+def markdown_report(rules: list[Rule], out_dir: Path) -> str:
+    """Build the Markdown coverage report.
+
+    Rule links are written relative to ``out_dir``, since the report lives
+    in ``mappings/`` rather than at the repository root.
+    """
     by_tactic: dict[str, list[Rule]] = defaultdict(list)
     for rule in rules:
         for tactic in rule.tactics:
@@ -276,7 +281,8 @@ def markdown_report(rules: list[Rule]) -> str:
     out.append("| --- | --- | --- | --- | --- |")
     for rule in sorted(rules, key=lambda r: str(r.path)):
         techs = ", ".join(rule.techniques) or "—"
-        rel = rule.path.as_posix()
+        rel = os.path.relpath(rule.path.resolve(), out_dir.resolve())
+        rel = Path(rel).as_posix()
         out.append(
             f"| [{rule.title}]({rel}) | {rule.logsource_label} | "
             f"{techs} | {rule.level} | {rule.status} |"
@@ -397,7 +403,7 @@ def main() -> int:
     args.out_dir.mkdir(parents=True, exist_ok=True)
 
     md_path = args.out_dir / "attack-coverage.md"
-    md_path.write_text(markdown_report(rules), encoding="utf-8")
+    md_path.write_text(markdown_report(rules, args.out_dir), encoding="utf-8")
     print(f"wrote {md_path}")
 
     csv_path = args.out_dir / "mitre_attack_mapping.csv"
