@@ -10,7 +10,7 @@
 #   sigma plugin install splunk
 
 # Rule parsing for repository validation scripts
-PyYAML>=6.0,<7.0
+PyYAML>=6.0.3,<7.0
 
 # Sigma specification validation and backend conversion
 sigma-cli>=1.0.0,<2.0.0
