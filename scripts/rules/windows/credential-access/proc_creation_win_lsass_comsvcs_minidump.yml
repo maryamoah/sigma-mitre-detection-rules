@@ -1,0 +1,38 @@
+---
+title: LSASS Memory Dump via comsvcs.dll MiniDump Export
+id: a5d124de-2a12-4428-abd7-a6192d670b76
+status: experimental
+description: |
+    Detects rundll32.exe invoking the MiniDump export of comsvcs.dll against a
+    process ID, a signed-binary technique for dumping LSASS without dropping a
+    dedicated credential dumping tool. The signal is the combination of
+    comsvcs, MiniDump and a PID argument. rundll32.exe alone is far too common
+    to alert on.
+references:
+    - https://attack.mitre.org/techniques/T1003/001/
+    - https://lolbas-project.github.io/lolbas/Libraries/Comsvcs/
+author: Mary Amoah
+date: 2026-08-02
+tags:
+    - attack.credential_access
+    - attack.t1003.001
+logsource:
+    product: windows
+    category: process_creation
+    definition: |
+        Requires Sysmon Event ID 1 or Security Event ID 4688 with command line
+        auditing enabled (Audit Process Creation + Include command line).
+detection:
+    selection_img:
+        - Image|endswith: '\rundll32.exe'
+        - OriginalFileName: 'RUNDLL32.EXE'
+    selection_cli:
+        CommandLine|contains|all:
+            - 'comsvcs'
+            - 'MiniDump'
+    condition: all of selection_*
+falsepositives:
+    - Endpoint backup or forensic agents that legitimately capture process
+      memory. Confirm the parent process before creating an exclusion.
+    - Vendor diagnostic collection scripts run during a support engagement.
+level: high

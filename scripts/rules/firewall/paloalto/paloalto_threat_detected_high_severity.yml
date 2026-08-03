@@ -1,0 +1,47 @@
+---
+title: Palo Alto Threat Signature Match of High Severity
+id: 81fd8396-06a2-4caa-bd13-79423e401a8d
+status: experimental
+description: |
+    Detects high and critical severity threat signature matches from Palo Alto
+    threat logs, covering exploit attempts, malware delivery and command and
+    control traffic. Threat log volume varies enormously by environment and
+    by how aggressively signatures are tuned, so validate volume before
+    alerting on this directly.
+references:
+    - https://attack.mitre.org/techniques/T1190/
+    - https://docs.paloaltonetworks.com/pan-os/11-1/pan-os-admin/monitoring/use-syslog-for-monitoring/syslog-field-descriptions
+author: Mary Amoah
+date: 2026-08-02
+tags:
+    - attack.initial_access
+    - attack.t1190
+    - attack.command_and_control
+logsource:
+    product: paloalto
+    service: threat
+    definition: |
+        Palo Alto threat logs (type THREAT). Field names follow PAN-OS syslog
+        field descriptions. Map severity, subtype and action if your pipeline
+        normalises to ECS.
+detection:
+    selection:
+        type: 'THREAT'
+        severity:
+            - 'high'
+            - 'critical'
+    selection_subtype:
+        subtype:
+            - 'vulnerability'
+            - 'virus'
+            - 'spyware'
+            - 'wildfire'
+    condition: all of selection*
+falsepositives:
+    - Authorised vulnerability scanning, which reliably produces exploit
+      signature matches. Exclude scanner source addresses rather than
+      disabling the signatures.
+    - Security research and penetration testing within an agreed scope.
+    - Signatures with known false positive behaviour against specific
+      internal applications.
+level: high

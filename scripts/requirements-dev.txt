@@ -1,0 +1,19 @@
+# Development and validation dependencies.
+#
+# Install:  python -m pip install -r requirements-dev.txt
+#
+# Backend plugins are intentionally not listed here. They are installed
+# through Sigma CLI, which manages plugin compatibility with the installed
+# pySigma version:
+#
+#   sigma plugin list
+#   sigma plugin install splunk
+
+# Rule parsing for repository validation scripts
+PyYAML>=6.0,<7.0
+
+# Sigma specification validation and backend conversion
+sigma-cli>=1.0.0,<2.0.0
+
+# YAML style enforcement, matched to .yamllint.yml
+yamllint>=1.35.0,<2.0.0

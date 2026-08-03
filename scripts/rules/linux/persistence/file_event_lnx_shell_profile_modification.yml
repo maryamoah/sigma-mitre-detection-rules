@@ -1,0 +1,44 @@
+---
+title: Shell Startup File Modified for Persistence
+id: 559cd7d8-5c29-4397-b829-d1999ba999b9
+status: experimental
+description: |
+    Detects modification of shell startup files. Commands appended to these
+    files execute on every interactive login, providing persistence in user
+    context that requires no privilege and is commonly missed because the
+    files are expected to change occasionally.
+references:
+    - https://attack.mitre.org/techniques/T1546/004/
+    - https://www.gnu.org/software/bash/manual/html_node/Bash-Startup-Files.html
+author: Mary Amoah
+date: 2026-08-02
+tags:
+    - attack.persistence
+    - attack.t1546.004
+logsource:
+    product: linux
+    category: file_event
+detection:
+    selection_user:
+        TargetFilename|endswith:
+            - '/.bashrc'
+            - '/.bash_profile'
+            - '/.bash_login'
+            - '/.profile'
+            - '/.zshrc'
+            - '/.zshenv'
+    selection_system:
+        TargetFilename|startswith:
+            - '/etc/profile.d/'
+        TargetFilename|endswith: '.sh'
+    selection_system_files:
+        TargetFilename:
+            - '/etc/profile'
+            - '/etc/bash.bashrc'
+            - '/etc/zsh/zshrc'
+    condition: 1 of selection_*
+falsepositives:
+    - Users customising their own shell environment, which is routine on
+      developer and administrative workstations.
+    - Package installers appending PATH entries to /etc/profile.d.
+level: low

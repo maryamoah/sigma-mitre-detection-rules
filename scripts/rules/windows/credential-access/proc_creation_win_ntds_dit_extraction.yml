@@ -1,0 +1,43 @@
+---
+title: NTDS.dit Extraction via ntdsutil or vssadmin
+id: 5dd458c7-2a12-473f-abfe-bc030ddf218a
+status: experimental
+description: |
+    Detects creation of an Active Directory database snapshot using ntdsutil
+    IFM media creation, or a shadow copy created on a domain controller as a
+    route to reading NTDS.dit. Extraction of NTDS.dit yields every domain
+    account hash and is a terminal event for domain confidentiality.
+references:
+    - https://attack.mitre.org/techniques/T1003/003/
+    - https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/deploy/install-ad-ds-from-media
+author: Mary Amoah
+date: 2026-08-02
+tags:
+    - attack.credential_access
+    - attack.t1003.003
+logsource:
+    product: windows
+    category: process_creation
+    definition: |
+        Applies to domain controllers. Deploy only where DC process creation
+        telemetry is collected, otherwise this rule cannot fire.
+detection:
+    selection_ntdsutil:
+        Image|endswith: '\ntdsutil.exe'
+        CommandLine|contains:
+            - 'create full'
+            - 'ifm'
+    selection_vss_ntds:
+        CommandLine|contains|all:
+            - 'vssadmin'
+            - 'create shadow'
+            - 'ntds'
+    selection_copy_ntds:
+        CommandLine|contains: 'ntds.dit'
+    condition: 1 of selection_*
+falsepositives:
+    - Legitimate IFM media creation when promoting a new domain controller.
+      This is infrequent and should correlate with a change record.
+    - Backup software performing an authorised Active Directory system state
+      backup. Confirm the parent process is the backup agent.
+level: critical

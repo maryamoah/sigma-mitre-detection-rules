@@ -1,0 +1,38 @@
+---
+title: File Download via Certutil
+id: 9a9c4475-aed0-4dc3-9896-b79eb3409a3d
+status: experimental
+description: |
+    Detects certutil.exe used to retrieve a remote file or to decode base64
+    content. Certutil is a signed certificate utility present on every Windows
+    host, and its download and decode functions are a long-standing substitute
+    for dropping a dedicated downloader.
+references:
+    - https://attack.mitre.org/techniques/T1105/
+    - https://lolbas-project.github.io/lolbas/Binaries/Certutil/
+author: Mary Amoah
+date: 2026-08-02
+tags:
+    - attack.command_and_control
+    - attack.t1105
+    - attack.defense_evasion
+    - attack.t1140
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection_img:
+        - Image|endswith: '\certutil.exe'
+        - OriginalFileName: 'CertUtil.exe'
+    selection_download:
+        CommandLine|contains:
+            - 'urlcache'
+            - 'verifyctl'
+            - '-decode'
+            - '/decode'
+    condition: all of selection_*
+falsepositives:
+    - Certificate revocation list retrieval performed by legitimate PKI
+      management scripts, which typically target an internal CA hostname.
+    - Build or deployment pipelines decoding certificate material.
+level: high

@@ -1,0 +1,36 @@
+---
+title: Process Execution Under Alternate Credentials via runas
+id: 052939e5-5df4-462b-9dba-93c5b84c3ad8
+status: experimental
+description: |
+    Detects runas.exe launching a process under different credentials,
+    particularly with the /netonly flag. The /netonly variant authenticates
+    to remote resources with supplied credentials while leaving the local
+    session unchanged, a common step after credential theft and before
+    lateral movement.
+references:
+    - https://attack.mitre.org/techniques/T1134/
+    - https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/runas
+author: Mary Amoah
+date: 2026-08-02
+tags:
+    - attack.privilege_escalation
+    - attack.t1134
+    - attack.defense_evasion
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection_img:
+        - Image|endswith: '\runas.exe'
+        - OriginalFileName: 'runas.exe'
+    selection_args:
+        CommandLine|contains:
+            - '/netonly'
+            - '/user:'
+    condition: all of selection_*
+falsepositives:
+    - Administrators using a separate privileged account for management tasks,
+      which is expected practice in tiered administration models.
+    - Developers running tooling under a service account context.
+level: medium

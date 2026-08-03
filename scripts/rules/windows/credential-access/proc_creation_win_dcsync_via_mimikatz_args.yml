@@ -1,0 +1,33 @@
+---
+title: Suspicious Directory Replication Command Line Arguments
+id: 95694091-d715-4866-a905-b192906074b2
+status: experimental
+description: |
+    Detects command lines containing directory replication arguments commonly
+    associated with DCSync, where an attacker with replication rights requests
+    account secrets from a domain controller over MS-DRSR rather than touching
+    the DC filesystem. This rule matches the argument pattern only. Reliable
+    DCSync detection requires Event ID 4662 monitoring on replication GUIDs.
+references:
+    - https://attack.mitre.org/techniques/T1003/006/
+    - https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-drsr/f977faaa-673e-4f66-b9bf-48c640241d47
+author: Mary Amoah
+date: 2026-08-02
+tags:
+    - attack.credential_access
+    - attack.t1003.006
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection:
+        CommandLine|contains:
+            - 'lsadump::dcsync'
+            - '/dcsync'
+    condition: selection
+falsepositives:
+    - Authorised red team or purple team exercises. These should be scoped and
+      known in advance.
+    - Security tooling that references the technique name in a scan profile or
+      log path. Verify the executing image before escalating.
+level: critical

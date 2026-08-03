@@ -1,0 +1,68 @@
+---
+name: False positive report
+description: Report benign activity matching an existing rule
+title: '[FP]: '
+labels: ['false-positive', 'tuning']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        False positive reports are the most valuable feedback this project
+        receives. They are how a rule moves from experimental to stable.
+
+        **Redact all environment-specific data** — hostnames, usernames,
+        internal IP addresses, domain names, and file paths containing
+        organisation identifiers.
+
+  - type: input
+    id: rule
+    attributes:
+      label: Rule file
+      placeholder: rules/windows/process_creation/win_susp_rundll32_network.yml
+    validations:
+      required: true
+
+  - type: textarea
+    id: benign
+    attributes:
+      label: Benign activity
+      description: What legitimate process or workflow triggered the rule?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: Frequency
+      options:
+        - Continuous (many per hour)
+        - Daily
+        - Weekly
+        - Occasional / event-driven
+    validations:
+      required: true
+
+  - type: textarea
+    id: sample
+    attributes:
+      label: Redacted sample event
+      description: The matching fields only. Remove everything identifying.
+      render: yaml
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested filter
+      description: |
+        A proposed exclusion, if you have one. Prefer narrow filters tied to
+        signed binaries or specific parent-child relationships over broad
+        path or hostname exclusions.
+      render: yaml
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Confirmation
+      options:
+        - label: All environment-specific data has been redacted.
+          required: true

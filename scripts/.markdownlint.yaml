@@ -1,0 +1,53 @@
+---
+# markdownlint configuration
+# Reference: https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
+
+default: true
+
+# MD013 line-length — prose reflows in the GitHub renderer, and hard
+# wrapping makes diffs on documentation noisier than they need to be.
+MD013: false
+
+# MD024 duplicate headings — CHANGELOG.md repeats "Added", "Changed",
+# and "Fixed" under each release, which is correct Keep a Changelog form.
+MD024:
+  siblings_only: true
+
+# MD033 inline HTML — required for the README banner, badge alignment,
+# and collapsible sections.
+MD033: false
+
+# MD034 bare URLs — allowed inside reference lists in rule documentation.
+MD034: false
+
+# MD036 emphasis instead of heading -- bold sub-labels are used to group
+# related items inside a section without inflating the table of contents
+# with h4 and h5 entries.
+MD036: false
+
+# MD040 fenced code language -- pull request and issue templates contain
+# intentionally empty fences for contributors to paste output into.
+MD040: false
+
+# MD041 first line heading — the README opens with a centred HTML banner
+# block rather than a Markdown H1.
+MD041: false
+
+# Enforce consistent list and emphasis style across all documentation.
+MD004:
+  style: dash
+
+MD029:
+  style: ordered
+
+MD035:
+  style: '---'
+
+MD048:
+  style: backtick
+
+MD049:
+  style: underscore
+
+MD050:
+  style: asterisk

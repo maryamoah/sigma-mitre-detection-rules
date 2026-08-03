@@ -1,0 +1,36 @@
+---
+title: Regsvr32 Scriptlet Execution via scrobj.dll
+id: 3b3628b8-a259-4fdf-9ddf-0fb95d0c7232
+status: experimental
+description: |
+    Detects regsvr32.exe registering a scriptlet through scrobj.dll, or
+    loading a component from a remote location. Known as Squiblydoo, this
+    executes attacker-controlled script through a signed binary without
+    writing a conventional executable to disk.
+references:
+    - https://attack.mitre.org/techniques/T1218/010/
+    - https://lolbas-project.github.io/lolbas/Binaries/Regsvr32/
+author: Mary Amoah
+date: 2026-08-02
+tags:
+    - attack.defense_evasion
+    - attack.t1218.010
+    - attack.execution
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection_img:
+        - Image|endswith: '\regsvr32.exe'
+        - OriginalFileName: 'REGSVR32.EXE'
+    selection_suspicious:
+        CommandLine|contains:
+            - 'scrobj.dll'
+            - 'http://'
+            - 'https://'
+            - '/i:'
+    condition: all of selection_*
+falsepositives:
+    - Application installers registering COM scriptlet components. These are
+      normally parented by msiexec.exe or a vendor setup binary.
+level: high

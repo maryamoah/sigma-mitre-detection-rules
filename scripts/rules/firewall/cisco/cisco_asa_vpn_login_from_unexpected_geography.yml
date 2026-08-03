@@ -1,0 +1,39 @@
+---
+title: Cisco ASA VPN Session Established
+id: 06d93b37-37f5-428e-84ed-e9ce3fc7b8f5
+status: experimental
+description: |
+    Selects successful VPN session establishment events on Cisco ASA. On its
+    own this is not suspicious. It becomes a detection when enriched with
+    geolocation and compared against an account baseline, or when correlated
+    with impossible travel. The rule exists to provide a clean base event for
+    that enrichment.
+references:
+    - https://attack.mitre.org/techniques/T1133/
+    - https://www.cisco.com/c/en/us/td/docs/security/asa/syslog/b_syslog.html
+author: Mary Amoah
+date: 2026-08-02
+tags:
+    - attack.initial_access
+    - attack.t1133
+    - attack.persistence
+logsource:
+    product: cisco
+    service: asa
+    definition: |
+        Cisco ASA syslog. Message ID 113039 records AnyConnect session
+        establishment; 722022 and 722055 cover tunnel establishment. Requires
+        geolocation enrichment on the source address to be useful.
+detection:
+    selection:
+        message_id:
+            - '113039'
+            - '722022'
+            - '722055'
+    condition: selection
+falsepositives:
+    - All normal remote access. This rule matches every successful VPN login
+      by design and must not be deployed as a standalone alert.
+    - Travelling staff and users behind commercial VPN services, which is the
+      main source of geolocation noise.
+level: informational

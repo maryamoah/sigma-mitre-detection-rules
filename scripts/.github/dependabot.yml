@@ -1,0 +1,40 @@
+---
+version: 2
+updates:
+  # Python tooling used for validation and conversion
+  - package-ecosystem: pip
+    directory: '/'
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - python
+    commit-message:
+      prefix: 'build(deps)'
+    groups:
+      sigma-toolchain:
+        patterns:
+          - 'sigma-cli'
+          - 'pysigma*'
+      linting:
+        patterns:
+          - 'yamllint'
+          - 'ruff'
+          - 'black'
+
+  # GitHub Actions pinned in workflow files
+  - package-ecosystem: github-actions
+    directory: '/'
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - github-actions
+    commit-message:
+      prefix: 'ci(deps)'

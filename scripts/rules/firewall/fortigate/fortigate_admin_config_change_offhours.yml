@@ -1,0 +1,47 @@
+---
+title: FortiGate Administrative Configuration Change
+id: 85cb1e87-bb5a-44e6-afb4-760f28f0658d
+status: experimental
+description: |
+    Detects administrative configuration changes on a FortiGate appliance.
+    Firewall policy modification is a high-impact action: an attacker with
+    administrative access can open egress paths, disable inspection, or
+    create a persistent management route. Change volume is low in most
+    environments, which makes this practical to review.
+references:
+    - https://attack.mitre.org/techniques/T1562/004/
+    - https://docs.fortinet.com/document/fortigate/latest/fortios-log-message-reference
+author: Mary Amoah
+date: 2026-08-02
+tags:
+    - attack.defense_evasion
+    - attack.t1562.004
+    - attack.persistence
+logsource:
+    product: fortigate
+    service: event
+    definition: |
+        FortiGate event logs, subtype system. Field names below follow FortiOS
+        log key conventions. If your pipeline normalises to ECS or to a vendor
+        app in Splunk, map logid, action, cfgpath and ui before deployment.
+detection:
+    selection_cfg:
+        subtype: 'system'
+        action:
+            - 'Edit'
+            - 'Add'
+            - 'Delete'
+    selection_sensitive_path:
+        cfgpath|contains:
+            - 'firewall.policy'
+            - 'system.admin'
+            - 'vpn.ipsec'
+            - 'system.interface'
+            - 'log.setting'
+    condition: all of selection_*
+falsepositives:
+    - Scheduled change windows and approved firewall rule requests. Correlate
+      against your change management record before escalating.
+    - Automated configuration backup or compliance tooling that authenticates
+      to the appliance.
+level: medium
