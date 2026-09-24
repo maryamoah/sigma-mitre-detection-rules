@@ -37,7 +37,7 @@ jobs:
 
       - name: Raise an issue for dead references
         if: steps.lychee.outputs.exit_code != 0
-        uses: peter-evans/create-issue-from-file@v5
+        uses: peter-evans/create-issue-from-file@v6
         with:
           title: Dead reference links detected
           content-filepath: ./lychee-report.md
